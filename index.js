@@ -20,6 +20,7 @@ app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use("/api/users", require('./routes/users.routes'));
 app.use("/api/userTypes", require('./routes/userTypes.routes'));
 app.use("/api/auth", require('./routes/auth.routes'));
+app.use("/api/user-verification", require('./routes/usersVerification.routes'));
 app.get("*", (req, res) => { res.status(404).send() });
 
 // Middleware

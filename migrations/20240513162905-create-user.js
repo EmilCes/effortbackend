@@ -28,7 +28,8 @@ module.exports = {
       },
       middlename: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        defaultValue: ""
       },
       lastname: {
         type: Sequelize.STRING,
@@ -36,23 +37,29 @@ module.exports = {
       },
       weight: {
         type: Sequelize.FLOAT,
-        allowNull: false
+        allowNull: false,
+        defaultValue: 0.0
       },
       height: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        defaultValue: 100
       },
       dateOfBirth: {
         type: Sequelize.DATEONLY,
-        allowNull: false
+        allowNull: false,
+        defaultValue: "1999-09-9"
+
       },
       bio: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
+        defaultValue: "Entrenando..."
       },
       streak: {
         type: Sequelize.INTEGER,
-        allowNull: true
+        allowNull: true,
+        defaultValue: 0
       },
       userTypeId: {
         allowNull: false,
@@ -71,6 +78,14 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      emailVerified: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
+      emailVerificationToken: {
+        type: Sequelize.STRING,
+        defaultValue: null
       }
     });
   },

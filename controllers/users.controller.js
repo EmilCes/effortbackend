@@ -1,4 +1,6 @@
+const { where } = require('sequelize');
 const { user, userType, Sequelize } = require('../models');
+const { sendEmail } = require('../services/mailSender.service')
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
@@ -64,6 +66,7 @@ self.create = async function (req, res) {
             dateOfBirth: req.body.dateOfBirth,
             userTypeId: userTypeInstance.userTypeId // Cambia userType a userTypeInstance
         });
+
 
         return res.status(201).json({
             id: data.id,

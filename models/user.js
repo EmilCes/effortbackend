@@ -33,7 +33,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     middlename: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true,
+      defaultValue: ""
     },
     lastname: {
       type: DataTypes.STRING,
@@ -41,27 +42,40 @@ module.exports = (sequelize, DataTypes) => {
     },
     weight: {
       type: DataTypes.FLOAT,
-      allowNull: false
+      allowNull: true,
+      defaultValue: 0.0
     },
     height: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true,
+      defaultValue: 100
     },
     dateOfBirth: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: true,
+      defaultValue: "1999-09-09"
     },
     bio: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
+      defaultValue: "Entrenando..."
     },
     streak: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
+      defaultValue: 0
     },
     userTypeId: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    emailVerified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    emailVerificationToken: {
+      type: DataTypes.STRING,
+      defaultValue: null
     }
   }, {
     sequelize,
