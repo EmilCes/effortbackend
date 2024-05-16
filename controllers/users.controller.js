@@ -1,6 +1,4 @@
-const { where } = require('sequelize');
 const { user, userType, Sequelize } = require('../models');
-const { sendEmail } = require('../services/mailSender.service')
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 

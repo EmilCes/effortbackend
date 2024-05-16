@@ -1,10 +1,7 @@
 FROM node:21
 
-# Instala git
-RUN apt-get update && apt-get install -y git
-
 # Clona el repositorio
-RUN git clone https://github.com/tu-usuario/tu-repositorio.git /app
+RUN git clone https://github.com/EmilCes/effortbackend.git /app
 
 # Establece el directorio de trabajo en el contenedor
 WORKDIR /app

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET;
-const ClaimTypes = require('../config/claimtypes');
+const ClaimTypes = require('../config/claimTypes');
 
 const GenerateToken = (email, username, userType) => {
     const token = jwt.sign({
