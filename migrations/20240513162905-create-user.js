@@ -47,9 +47,7 @@ module.exports = {
       },
       dateOfBirth: {
         type: Sequelize.DATEONLY,
-        allowNull: false,
-        defaultValue: "1999-09-9"
-
+        allowNull: false
       },
       bio: {
         type: Sequelize.STRING,

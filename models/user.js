@@ -52,8 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     dateOfBirth: {
       type: DataTypes.DATEONLY,
-      allowNull: true,
-      defaultValue: "1999-09-09"
+      allowNull: false
     },
     bio: {
       type: DataTypes.STRING,

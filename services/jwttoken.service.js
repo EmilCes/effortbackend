@@ -11,7 +11,8 @@ const GenerateToken = (email, username, userType) => {
         "aud": "EffortUsers"
     },
         jwtSecret, {
-            expiresIn: '20m'
+            expiresIn: '20m',
+            algorithm: 'HS256'
         }
     )
 

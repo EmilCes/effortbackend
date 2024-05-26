@@ -62,7 +62,7 @@ self.create = async function (req, res) {
             weight: req.body.weight,
             height: req.body.height,
             dateOfBirth: req.body.dateOfBirth,
-            userTypeId: userTypeInstance.userTypeId // Cambia userType a userTypeInstance
+            userTypeId: userTypeInstance.userTypeId
         });
 
 

@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const { user } = require('../models');
-const { sendEmail } = require('../services/mailSender.service')
+const { sendEmail } = require('../services/mailSender.service');
+const { getLocalIP } = require('../helpers/localIp.helper');
 
 let self = {};
 
@@ -17,7 +18,7 @@ self.sendEmail = async function (req, res) {
         const token = crypto.randomBytes(20).toString('hex');
         userInstance.emailVerificationToken = token;
         await user.update({ emailVerificationToken: token }, { where: { email: email } })
-        const verificationLink = `http://192.168.100.5:3000/api/user-verification/${token}`;
+        const verificationLink = `http://${getLocalIP()}:3000/api/user-verification/${token}`;
 
         await sendEmail(
             email,
@@ -36,12 +37,12 @@ self.verifiedEmail = async function (req, res) {
     const email = req.params.email;
     let data = await user.findOne({ where: { email: email, emailVerified: true } });
 
-    if (!data) return res.status(400).json({ message: 'Correo no verificado.' });
+    if (!data) return res.status(200).json({ isVerified: false });
 
-    return res.status(200).json({ message: 'Correo verificado.' });
+    return res.status(200).json({ isVerified: true });
 }
 
-// GET: api/user-verification/token
+// PUT: api/user-verification/token
 self.verifyEmail = async function (req, res) {
     try {
         const token = req.params.token;
@@ -65,6 +66,5 @@ self.verifyEmail = async function (req, res) {
         console.error('Error al verificar el correo:', error);
     }
 }
-
 
 module.exports = self;

@@ -21,6 +21,8 @@ app.use("/api/users", require('./routes/users.routes'));
 app.use("/api/userTypes", require('./routes/userTypes.routes'));
 app.use("/api/auth", require('./routes/auth.routes'));
 app.use("/api/user-verification", require('./routes/usersVerification.routes'));
+app.use("/api/muscles", require('./routes/muscles.routes'));
+app.use("/api/exercises", require('./routes/exercises.routes'));
 app.get("*", (req, res) => { res.status(404).send() });
 
 // Middleware
