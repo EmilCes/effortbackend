@@ -34,6 +34,8 @@ app.use(errorlogger, errorhandler);
 
 
 // Start web server  SERVER_PORT
-app.listen(process.env.SERVER_PORT, () => {
+const server = app.listen(process.env.SERVER_PORT, () => {
     console.log(`Effort Backend listening: ${process.env.SERVER_PORT}`)
 });
+
+module.exports = server
