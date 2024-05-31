@@ -4,13 +4,7 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class dailyroutine extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
       dailyroutine.belongsToMany(models.weeklyroutine, { through: models.weeklydailyroutine, foreignKey: 'dailyroutineId'});
     }
   }
@@ -32,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'dailyroutine',
+    tableName: 'dailyroutines'
   });
   return dailyroutine;
 };

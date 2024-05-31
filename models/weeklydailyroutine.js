@@ -35,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'weeklydailyroutine',
+    tableName: 'weeklydailyroutines'
   });
   return weeklydailyroutine;
 };
