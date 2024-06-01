@@ -20,9 +20,6 @@ router.delete('/:exerciseId', Authorize('Admin,BodyBuilder,Trainer'), exercises.
 // POST: api/exercises/exerciseId/muscles
 router.post('/:exerciseId/muscles', Authorize('Admin,BodyBuilder,Trainer'), exercises.addMuscles);
 
-// POST: api/exercises/exerciseId/muscles
-router.post('/:exerciseId/muscles', Authorize('Admin,BodyBuilder,Trainer'), exercises.addMuscles);
-
 // PUT: api/exercises/exerciseId/muscles
 router.put('/:exerciseId/muscles', Authorize('Admin,BodyBuilder,Trainer'), exercises.updateMuscles);
 

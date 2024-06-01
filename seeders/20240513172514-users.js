@@ -17,7 +17,6 @@ module.exports = {
 
     await queryInterface.bulkInsert('users', [
       { userId: crypto.randomUUID(), email: 'emilianolezama@yahoo.com', password: await bcrypt.hash('qwerty', 10), username: 'Kir', name: 'Kirbith', middlename: 'Cubillas', lastname: 'Hernández', weight: 72.4, height: 184, dateOfBirth: '2003-04-05', userTypeId: AdminUUID, createdAt: new Date(), updatedAt: new Date() },
-      { userId: crypto.randomUUID(), email: 'emilianolezama@outlook.com', password: await bcrypt.hash('qwerty', 10), username: 'Cesarele23', name: 'César', middlename: 'Lezama', lastname: 'López', weight: 72.4, height: 184, dateOfBirth: '2003-04-05', userTypeId: BodyBuilderUUID, createdAt: new Date(), updatedAt: new Date() },
       { userId: crypto.randomUUID(), email: 'emilianolezama@gmail.com', password: await bcrypt.hash('qwerty', 10), username: 'Jes', name: 'Jesus', middlename: 'Mujica', lastname: 'Conde', weight: 72.4, height: 180, dateOfBirth: '2003-04-05', userTypeId: TrainerUUID, createdAt: new Date(), updatedAt: new Date() }
     ]);
   },

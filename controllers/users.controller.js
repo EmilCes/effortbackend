@@ -1,7 +1,7 @@
-const { user, userType, Sequelize } = require('../models');
+const { user, file, dailyroutine, userDailyRoutine, userType, Sequelize } = require('../models');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
-const { Op } = require('sequelize');
+const { Op, where } = require('sequelize');
 
 let self = {};
 
@@ -45,11 +45,18 @@ self.get = async function (req, res) {
             exclude: ['createdAt', 'updatedAt', 'userTypeId', 'emailVerified', 'emailVerificationToken', 'password'],
             include: [[Sequelize.col('userType.description'), 'userType']]
         },
-        include: {
-            model: userType,
-            as: 'userType',
-            attributes: []
-        }
+        include: [
+            {
+                model: userType,
+                as: 'userType',
+                attributes: []
+            },
+            {
+                model: file,
+                as: 'file',
+                attributes: ['fileId']
+            }
+        ]
     });
 
     if (data)
@@ -167,6 +174,125 @@ self.delete = async function (req, res) {
 
     return res.status(400).send();
 }
+
+// GET: api/dailyroutines/users/:username
+self.getDailyRoutines = async function (req, res) {
+    try {
+        const username = req.params.username;
+        const { s } = req.query;
+
+        const existingUser = await user.findOne({ where: { username } });
+
+        if (!existingUser)
+            return res.status(404).json({ error: "Usuario no encontrado" });
+
+        const userRoutines = await userDailyRoutine.findAll({
+            where: { userId: existingUser.userId }
+        });
+
+        // Extraemos los IDs de las rutinas diarias asociadas con el usuario
+        const routineIds = userRoutines.map(userRoutine => userRoutine.routineId);
+
+        // Consultamos las rutinas diarias correspondientes a esos IDs
+        const data = await dailyroutine.findAll({
+            where: {
+                routineId: routineIds,
+                ...(s && { name: { [Op.like]: `%${s}%` } })
+            },
+            attributes: ['routineId', 'name']
+        });
+
+        const response = {
+            "routines": data
+        }
+
+        return res.status(200).json(response);
+    } catch (error) {
+        console.error("Error al obtener rutinas: ", error);
+        return res.status(500).json({ error: "Error al obtener rutinas: " });
+    }
+}
+
+
+
+// POST: api/users/:username/dailyroutines/:routineId
+self.addDailyRoutine = async function (req, res) {
+    try {
+        const username = req.params.username;
+        const routineId = req.params.routineId;
+        const isOwner = req.body.isOwner;
+
+        const existingUser = await user.findOne({ where: {username: username} });
+        const existingRoutine = await dailyroutine.findByPk(routineId);
+
+        if (!existingUser) 
+            return res.status(404).json({ error: "Usuario no encontrado" });
+
+        if (!existingRoutine) 
+            return res.status(404).json({ error: "Rutina no encontrado" });
+
+        if(isOwner == null) 
+            return res.status(400).send();
+
+        const now = new Date();
+
+        await existingUser.addDailyRoutine(existingRoutine,  { through: { creator: isOwner, createdAt: now, updatedAt: now } });
+
+        return res.status(200).json({ message: "Rutina asociada correctamente" });
+
+    } catch (error) {
+        console.error("Error al asociar rutina al usuario:", error);
+        return res.status(500).json({ error: "Error al asociar rutina al usuario" });
+    }
+}
+
+// POST: api/users/:userId/files/:fileId
+self.addFile = async function (req, res) {
+    try {
+        const username = req.params.username;
+        const fileId = req.params.fileId;
+
+        const existingUser = await user.findOne({ where: {username: username} });
+        const existingFile = await file.findByPk(fileId);
+
+        if (!existingUser) 
+            return res.status(404).json({ error: "Usuario no encontrado" });
+
+        if (!existingFile) 
+            return res.status(404).json({ error: "Archivo no encontrado" });
+
+        await existingUser.setFile(existingFile);
+
+        return res.status(200).json({ message: "Archivo asociado correctamente" });
+
+    } catch (error) {
+        console.error("Error al asociar archivo al usuario:", error);
+        return res.status(500).json({ error: "Error al asociar archivo al usuario" });
+    }
+}
+
+// PUT: api/users/:userId/files/:fileId
+self.updateFile = async function (req, res) {
+    try {
+        const userId = req.params.userId;
+        const fileId = req.params.fileId;
+
+        const existingUser = await user.findByPk(userId);
+        const existingFile = await file.findByPk(fileId);
+        if (!existingUser || !existingFile) {
+            return res.status(404).json({ error: "Usuario o archivo no encontrado" });
+        }
+
+        await existingUser.setFile(existingFile);
+
+        return res.status(200).json({ message: "Asociación entre usuario y archivo actualizada exitosamente" });
+
+    } catch (error) {
+        console.error("Error al actualizar asociación entre usuario y archivo:", error);
+        return res.status(500).json({ error: "Error al actualizar asociación entre usuario y archivo" });
+    }
+}
+
 
 module.exports = self;
 

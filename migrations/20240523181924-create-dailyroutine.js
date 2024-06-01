@@ -4,15 +4,12 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('dailyroutines', {
       routineId: {
-        type: Sequelize.UUID,
         allowNull: false,
-        primaryKey: true
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      description: {
         type: Sequelize.STRING,
         allowNull: false
       },

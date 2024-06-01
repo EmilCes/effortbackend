@@ -1,26 +1,26 @@
 'use strict';
+
+const { DataTypes } = require('sequelize');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('weeklydailyroutines', {
-      id: {
+  async up (queryInterface, Sequelize) {
+    await queryInterface.createTable('userDailyRoutines', {
+      userId: {
         type: Sequelize.UUID,
-        allowNull: false,
         primaryKey: true,
-      },
-      weeklyroutineId: {
-        type: Sequelize.UUID,
         allowNull: false,
         references: {
-          model: 'weeklyroutines',
-          key: 'weeklyroutineId'
+          model: 'users',
+          key: 'userId'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      dailyroutineId: {
-        type: Sequelize.INTEGER,
+      routineId: {
         allowNull: false,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
         references: {
           model: 'dailyroutines',
           key: 'routineId'
@@ -28,8 +28,8 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      day: {
-        type: Sequelize.STRING,
+      creator: {
+        type: Sequelize.BOOLEAN,
         allowNull: false
       },
       createdAt: {
@@ -42,7 +42,9 @@ module.exports = {
       }
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('weeklydailyroutines');
+
+  async down (queryInterface, Sequelize) {
+    await queryInterface.dropTable('userDailyRoutines');
+
   }
 };

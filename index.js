@@ -25,6 +25,8 @@ app.use("/api/muscles", require('./routes/muscles.routes'));
 app.use("/api/exercises", require('./routes/exercises.routes'));
 app.use('/api/dailyroutines', require('./routes/dailyroutines.routes'));
 app.use('/api/weeklyroutines', require('./routes/weeklyroutines.routes'));
+app.use('/api/files', require('./routes/files.routes'));
+
 app.get("*", (req, res) => { res.status(404).send() });
 
 // Middleware

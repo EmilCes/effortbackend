@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       exercise.belongsToMany(models.muscle, { as: 'muscles', through: 'exercisesMuscles', foreignKey: 'exerciseId' })
+      exercise.belongsToMany(models.dailyroutine, { as: 'dailyroutines', through: models.dailyRoutineExercise, foreignKey: 'exerciseId', otherKey: 'routineId' })
     }
   }
   exercise.init({

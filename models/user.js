@@ -6,6 +6,8 @@ module.exports = (sequelize, DataTypes) => {
   class user extends Model {
     static associate(models) {
       user.belongsTo(models.userType, { foreignKey: 'userTypeId' });
+      user.belongsToMany(models.dailyroutine, { through: models.userDailyRoutine, as: 'dailyRoutines', foreignKey: 'userId' });
+      user.hasOne(models.file, { foreignKey: 'userId', onDelete: 'CASCADE' });
     }
   }
   user.init({

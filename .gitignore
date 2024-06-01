@@ -134,3 +134,6 @@ restclient
 
 # SQL Scripts
 *.sql
+
+# Uploads
+uploads/*
