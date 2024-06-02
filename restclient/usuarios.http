@@ -1,0 +1,76 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZXhhbXBsZXcyQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiZXhhbXBsZVVzZXIyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVHJhaW5lciIsImlzcyI6IkVmZm9ydCIsImF1ZCI6IkVmZm9ydFVzZXJzIiwiaWF0IjoxNzE3MzA0ODU2LCJleHAiOjE3MTczMDYwNTZ9.PGw4LruEmZwFtBPvat_Rowh8lP2lAyCJuYVMxCZoDUg
+
+GET http://localhost:3000/api/users
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+###
+
+GET http://localhost:3000/api/users/Cesarele23
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+###
+
+GET http://localhost:3000/api/userTypes
+
+###
+
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+    "email": "example@example.com",
+    "password": "password123",
+    "username": "exampleUser",
+    "name": "John",
+    "middlename": "Michael",
+    "lastname": "Doe",
+    "weight": 75.5,
+    "height": 180,
+    "dateOfBirth": "1990-01-01",
+    "userType": "BodyBuilder"
+}
+
+###
+
+PUT http://localhost:3000/api/users/Cesarele22
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+{
+    "email": "example3@example.com",
+    "username": "elbuencarlos",
+    "name": "John",
+    "middlename": "Michael",
+    "lastname": "Doe",
+    "weight": 75.5,
+    "height": 180
+}
+
+###
+
+DELETE http://localhost:3000/api/users/exampleUser
+
+###
+
+POST http://localhost:3000/api/users/Kir/files/1
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+###
+
+
+GET http://localhost:3000/api/users/Cesarele23/dailyroutines
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+###
+
+POST http://localhost:3000/api/users/Cesarele23/dailyroutines/4
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+    "isOwner": true
+}
+

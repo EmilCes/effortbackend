@@ -1,0 +1,31 @@
+GET http://localhost:3000/api/users
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZXhhbXBsZXcyQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiZXhhbXBsZVVzZXIyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVHJhaW5lciIsImlzcyI6IkVmZm9ydCIsImF1ZCI6IkVmZm9ydFVzZXJzIiwiaWF0IjoxNzE3MzA2NTI1LCJleHAiOjE3MTczMDc3MjV9.4oB8E11UlVPnb0W_E2uEtfqHs6QdRF4yad50tj9bLA0
+
+###
+
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+    "email": "examplew2@example.com",
+    "password": "passW3Se?a#111",
+    "username": "exampleUser2",
+    "name": "John",
+    "middlename": "Michael",
+    "lastname": "Doe",
+    "weight": 75.5,
+    "height": 180,
+    "dateOfBirth": "1990-01-01",
+    "userType": "Trainer"
+}
+
+###
+
+POST http://localhost:3000/api/auth
+Content-Type: application/json
+
+{
+    "email": "examplew2@example.com",
+    "password": "passW3Se?a#111"
+}

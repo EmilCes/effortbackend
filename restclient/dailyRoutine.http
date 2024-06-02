@@ -1,0 +1,55 @@
+###
+
+GET http://localhost:3000/api/dailyroutines
+
+###
+
+GET http://localhost:3000/api/dailyroutines/4
+
+###
+
+POST http://localhost:3000/api/dailyroutines
+Content-Type: application/json
+
+{
+    "name": "Rutina Buenisima"
+}
+
+###
+
+PUT http://localhost:3000/api/dailyroutines/4
+Content-Type: application/json
+
+{
+    "name": "Rutina Pecho Perra"
+}
+
+###
+
+POST http://localhost:3000/api/dailyroutines/4/exercises
+Content-Type: application/json
+
+{
+    "exercises": [
+        {
+            "exerciseId": 1,
+            "series": 23,
+            "repetitions": 1
+        }
+    ]
+}
+
+###
+
+PUT http://localhost:3000/api/dailyroutines/4/exercises
+Content-Type: application/json
+
+{
+    "exercises": [
+        {
+            "exerciseId": 3,
+            "series": 23,
+            "repetitions": 1
+        }
+    ]
+}

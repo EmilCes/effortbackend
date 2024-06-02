@@ -1,0 +1,45 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZXhhbXBsZTFAZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJleGFtcGxlVXNlcjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJCb2R5QnVpbGRlciIsImlzcyI6IkVmZm9ydCIsImF1ZCI6IkVmZm9ydFVzZXJzIiwiaWF0IjoxNzE3MjExNzU0LCJleHAiOjE3MTcyMTI5NTR9.aN4LfnusNOE5Iv3r0yII5zQny2NWr7DL_i0Eca3bN1k
+
+GET http://localhost:3000/api/files
+Authorization: Bearer {{ token }}
+
+###
+
+GET http://localhost:3000/api/files/2/details
+Authorization: Bearer {{ token }}
+
+###
+
+GET http://localhost:3000/api/files/17
+Authorization: Bearer {{ token }}
+
+###
+
+POST http://localhost:3000/api/files
+Content-Type: multipart/form-data; boundary=XXX
+Authorization: Bearer {{ token }}
+
+--XXX
+Content-Disposition: form-data; name="file"; filename="elpadrino.jpg"
+Content-Type: image/jpeg
+
+< ./assets/archivogrande.jpg
+--XXX--
+
+###
+
+PUT http://localhost:3000/api/files/3
+Content-Type: multipart/form-data; boundary=XXX
+Authorization: Bearer {{ token }}
+
+--XXX
+Content-Disposition: form-data; name="file"; filename="caballerooscuro.jpg"
+Content-Type: image/jpeg
+
+< ./assets/caballerooscuro.jpg
+--XXX--
+
+###
+
+DELETE http://localhost:3000/api/files/1
+Authorization: Bearer {{ token }}
