@@ -187,7 +187,8 @@ self.getDailyRoutines = async function (req, res) {
             return res.status(404).json({ error: "Usuario no encontrado" });
 
         const userRoutines = await userDailyRoutine.findAll({
-            where: { userId: existingUser.userId }
+            where: { userId: existingUser.userId },
+            attributes: ['routineId', 'creator'] // Asegurándonos de incluir isOwner aquí
         });
 
         // Extraemos los IDs de las rutinas diarias asociadas con el usuario
@@ -202,8 +203,17 @@ self.getDailyRoutines = async function (req, res) {
             attributes: ['routineId', 'name']
         });
 
+        const routinesWithOwnership = data.map(routine => {
+            const userRoutine = userRoutines.find(ur => ur.routineId === routine.routineId);
+            const isOwner = userRoutine ? userRoutine.creator : false;
+            
+            console.log(`Routine ID: ${routine.routineId}, isOwner: ${isOwner}`); // Depuración
+
+            return { ...routine.toJSON(), isOwner }; // Incluyendo isOwner en la respuesta
+        });
+
         const response = {
-            "routines": data
+            routines: routinesWithOwnership
         }
 
         return res.status(200).json(response);
@@ -212,6 +222,7 @@ self.getDailyRoutines = async function (req, res) {
         return res.status(500).json({ error: "Error al obtener rutinas: " });
     }
 }
+
 
 
 

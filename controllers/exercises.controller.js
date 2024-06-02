@@ -8,7 +8,7 @@ self.getAll = async function (req, res) {
     try {
         const { s } = req.query;
 
-        const filters = {};
+        const filters = { isValid: true };
         if (s) {
             filters.name = {
                 [Op.like]: `%${s}%`
@@ -17,14 +17,13 @@ self.getAll = async function (req, res) {
 
         let data = await exercise.findAll({
             where: filters,
-            attributes: ['exerciseId', 'name', 'description', 'videoUrl'],
+            attributes: ['exerciseId', 'name', 'description', 'videoUrl', 'creatorId'],
             include: {
                 model: muscle,
                 as: 'muscles',
                 attributes: ['muscleId', 'muscleName'],
                 through: { attributes: [] }
-            },
-            subQuery: false
+            }
         });
 
         const dataToReturn = {
@@ -43,7 +42,7 @@ self.get = async function (req, res) {
     try {
         const exerciseId = req.params.exerciseId;
         const data = await exercise.findByPk(exerciseId, {
-            attributes: ['exerciseId', 'name', 'description', 'videoUrl'],
+            attributes: ['exerciseId', 'name', 'description', 'videoUrl', 'creatorId', 'isValid'],
             include: {
                 model: muscle,
                 as: 'muscles',
@@ -52,7 +51,7 @@ self.get = async function (req, res) {
             }
         });
     
-        if (data)
+        if (data && data.isValid === true)
             return res.status(200).json(data);
         else
             return res.status(404).send();
@@ -70,13 +69,16 @@ self.create = async function (req, res) {
             name: req.body.name,
             description: req.body.description,
             videoUrl: req.body.videoUrl,
+            creatorId: req.body.creatorId,
+            isValid: false
         });
 
         return res.status(201).json({
             exerciseId: data.exerciseId,
             name: data.name,
             description: data.description,
-            videoUrl: data.videoUrl
+            videoUrl: data.videoUrl,
+            creatorId: data.creatorId
         });
 
     } catch (error) {
@@ -91,6 +93,9 @@ self.update = async function (req, res) {
     try {
         const exerciseId = req.params.exerciseId;
         const body = req.body;
+
+        body.isValid = false;
+
         const data = await exercise.update(body, { where: { exerciseId: exerciseId } });
 
         if (data[0] === 0)
@@ -163,11 +168,6 @@ self.updateMuscles = async function (req, res) {
         console.log(error);
         return res.status(500).json(error);
     }
-}
-
-// POST: api/exercises/exerciseId/muscles/muscleId
-self.removeMuscle = async function (req, res) {
-
 }
 
 

@@ -84,6 +84,26 @@ self.create = async function (req, res) {
     }
 }
 
+// PUT: api/dailyroutines/:routineId
+self.update = async function (req, res) {
+    try {
+        const routineId = req.params.routineId;
+
+        const data = await dailyroutine.update(req.body, {
+            where: { routineId: routineId }
+        });
+    
+        if (data[0] === 0)
+            return res.status(404).send();
+        else
+            return res.status(204).send();
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json(error);
+    }
+}
+
 // POST: api/dailyroutines/:routineId/exercises
 self.addExercises = async function (req, res) {
     try {
@@ -110,6 +130,38 @@ self.addExercises = async function (req, res) {
     }
 };
 
+// PUT: api/dailyroutines/:routineId/exercises
+self.updateExercises = async function (req, res) {
+    try {
+        const { exercises } = req.body;
+
+        // Buscar la rutina diaria por su ID
+        const dailyRoutineItem = await dailyroutine.findByPk(req.params.routineId);
+        if (!dailyRoutineItem) {
+            return res.status(404).send('Daily routine not found');
+        }
+
+        // Eliminar todas las relaciones actuales
+        await dailyRoutineItem.setExercises([]);
+
+        // Agregar las nuevas relaciones de ejercicios
+        for (const { exerciseId, series, repetitions } of exercises) {
+            // Encontrar el ejercicio por su ID
+            const exerciseItem = await exercise.findByPk(exerciseId);
+            if (!exerciseItem) {
+                return res.status(404).send(`Exercise with id ${exerciseId} not found`);
+            }
+
+            // Agregar la nueva relación
+            await dailyRoutineItem.addExercise(exerciseItem, { through: { series, repetitions, createdAt: new Date(), updatedAt: new Date() } });
+        }
+
+        return res.status(204).send();
+    } catch (error) {
+        console.error("Error:", error);
+        return res.status(500).json(error);
+    }
+};
 
 
 module.exports = self;

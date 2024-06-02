@@ -11,7 +11,13 @@ router.get('/:routineId', dailyroutines.get);
 // POST: api/dailyroutines
 router.post('/', dailyroutines.create);
 
+// PUT: api/dailyroutines
+router.put('/:routineId', dailyroutines.update);
+
 // POST: api/dailyroutines/routineId/exercises
 router.post('/:routineId/exercises', dailyroutines.addExercises);
+
+// PUT: api/dailyroutines/:routineId/exercises
+router.put('/:routineId/exercises', dailyroutines.updateExercises);
 
 module.exports = router;

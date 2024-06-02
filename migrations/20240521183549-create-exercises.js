@@ -21,6 +21,20 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      isValid: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+      },
+      creatorId: {
+        type: Sequelize.UUID,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'userId'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
