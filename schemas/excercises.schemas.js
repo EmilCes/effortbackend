@@ -42,6 +42,16 @@ const createExcerciseSchema = () =>{
 
 const updateExerciseSchema = () => {
     return {
+        creatorId: {
+            in: ['body'],
+            optional: true,
+            notEmpty: {
+                errorMessage: 'Creator id must not be empty'
+            },
+            isString: {
+                errorMessage: 'Creator id must be a string'
+            }
+        },
         name: {
             in: ['body'],
             optional: true,
