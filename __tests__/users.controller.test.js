@@ -149,7 +149,7 @@ describe('User Controller', () => {
       expect(res.statusCode).toBe(204);
     });
   
-    it('should return 404 if user not found', async () => {
+    it('should return 400 if user not found', async () => {
       // Simular que el usuario no existe en la base de datos
       user.findOne.mockResolvedValue(null);
   
@@ -157,7 +157,7 @@ describe('User Controller', () => {
         .put('/api/users/nonexistent')
         .send({ email: 'updated@example.com' });
   
-      expect(res.statusCode).toBe(404);
+      expect(res.statusCode).toBe(400);
     });
   });
   

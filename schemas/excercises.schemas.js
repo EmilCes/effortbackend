@@ -24,8 +24,8 @@ const createExcerciseSchema = () =>{
             notEmpty: {
                 errorMessage: 'Video URL is required'
             },
-            isURL: {
-                errorMessage: 'Video URL must be a valid URL'
+            isString: {
+                errorMessage: 'Video URL must be a valid string'
             }
         },
         creatorId: {

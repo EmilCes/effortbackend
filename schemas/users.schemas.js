@@ -51,6 +51,7 @@ const createUserSchema = () => {
         },
         middlename: {
             in: ['body'],
+            optional: true,
             notEmpty: {
                 errorMessage: 'Middle name is required'
             },
@@ -69,6 +70,7 @@ const createUserSchema = () => {
         },
         weight: {
             in: ['body'],
+            optional: true,
             notEmpty: {
                 errorMessage: 'Weight is required'
             },
@@ -78,6 +80,7 @@ const createUserSchema = () => {
         },
         height: {
             in: ['body'],
+            optional: true,
             notEmpty: {
                 errorMessage: 'Height is required'
             },

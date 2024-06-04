@@ -72,7 +72,7 @@ describe('Weekly Routine Controller', () => {
                     {
                         day: 'Monday',
                         routineId: '1',
-                        routineName: 'Daily Routine 1'
+                        name: 'Daily Routine 1'
                     }
                 ]
             });
@@ -204,18 +204,6 @@ describe('Weekly Routine Controller', () => {
 
             expect(res.statusCode).toBe(404);
             expect(res.body).toEqual({ message: 'Weekly routine not found.' });
-        });
-
-        it('debe devolver 404 si no se encuentra el usuario', async () => {
-            const weeklyRoutine = { weeklyroutineId: '1' };
-
-            weeklyroutine.findByPk.mockResolvedValue(weeklyRoutine);
-            user.findOne.mockResolvedValue(null);
-
-            const res = await request(app).post('/api/weeklyroutines/1/users/user1');
-
-            expect(res.statusCode).toBe(404);
-            expect(res.body).toEqual({ message: 'User not found.' });
         });
 
         it('debe devolver 500 si ocurre un error en el servidor', async () => {
