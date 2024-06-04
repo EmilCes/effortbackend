@@ -52,9 +52,6 @@ const createUserSchema = () => {
         middlename: {
             in: ['body'],
             optional: true,
-            notEmpty: {
-                errorMessage: 'Middle name is required'
-            },
             isString: {
                 errorMessage: 'Middle name must be a string'
             }
@@ -71,9 +68,6 @@ const createUserSchema = () => {
         weight: {
             in: ['body'],
             optional: true,
-            notEmpty: {
-                errorMessage: 'Weight is required'
-            },
             isFloat: {
                 errorMessage: 'Weight must be a number'
             }
@@ -81,9 +75,6 @@ const createUserSchema = () => {
         height: {
             in: ['body'],
             optional: true,
-            notEmpty: {
-                errorMessage: 'Height is required'
-            },
             isFloat: {
                 errorMessage: 'Height must be a number'
             }
