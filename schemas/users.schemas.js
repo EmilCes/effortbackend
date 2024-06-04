@@ -108,20 +108,6 @@ const createUserSchema = () => {
 
 const updateUserSchema = () => {
     return {
-        idUsername: {
-            in: ['params'],
-            notEmpty: true,
-            isString: {
-                errorMessage: 'idUsername must be a string'
-            }
-        },
-        username: {
-            in: ['params'],
-            notEmpty: true,
-            isString: {
-                errorMessage: 'Username must be a string'
-            }
-        },
         email: {
             in: ['body'],
             optional: true,
@@ -177,5 +163,5 @@ const updateUserSchema = () => {
 module.exports = {
     getUserByUsernameSchema,
     createUserSchema,
-    updateUserSchema, 
+    updateUserSchema
 };

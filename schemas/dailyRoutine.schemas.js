@@ -12,13 +12,6 @@ const createDailyRoutine = () =>{
 
 const updateDailyRoutine = () =>{
     return{
-        id: {
-            in: ['params'],
-            notEmpty:true,
-            isDecimal: {
-                errorMessage: 'idDailyRoutine in params must be a number'
-            }
-        },
         name: {
             in: ['body'],
             notEmpty:true,
@@ -31,13 +24,6 @@ const updateDailyRoutine = () =>{
 
 const addExercisesToRoutineSchema = () => {
     return {
-        routineId: {
-            in: ['params'],
-            notEmpty: true,
-            isDecimal: {
-                errorMessage: 'Routine ID must be a number'
-            }
-        },
         exercises: {
             in: ['body'],
             isArray: {
@@ -53,13 +39,6 @@ const addExercisesToRoutineSchema = () => {
 
 const updateExercisesInRoutineSchema = () => {
     return {
-        routineId: {
-            in: ['params'],
-            notEmpty: true,
-            isDecimal: {
-                errorMessage: 'Routine ID must be a number'
-            }
-        },
         exercises: {
             in: ['body'],
             isArray: {

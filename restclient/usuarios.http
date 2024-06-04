@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZXhhbXBsZXcyQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiZXhhbXBsZVVzZXIyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVHJhaW5lciIsImlzcyI6IkVmZm9ydCIsImF1ZCI6IkVmZm9ydFVzZXJzIiwiaWF0IjoxNzE3NDY5MTIyLCJleHAiOjE3MTc0NzAzMjJ9.dnl53auqAGrAg7n3C7BtV2D5E7w1N6fBaF4qUB97ZEk
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZW1pbGlhbm9sZXphbWFAeWFob28uY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiS2lyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJpc3MiOiJFZmZvcnQiLCJhdWQiOiJFZmZvcnRVc2VycyIsImlhdCI6MTcxNzUxMzM4MSwiZXhwIjoxNzE3NTE0NTgxfQ.nAcjt30ivJEYbh_POSj0pDH4nG5zHPGvFvDVaXgrT8k
 
 GET http://localhost:3000/api/users
 Content-Type: application/json
@@ -34,9 +34,10 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/api/users/Cesarele22
+PUT http://localhost:3000/api/users/exampleUser
 Content-Type: application/json
 Authorization: Bearer {{ token }}
+
 {
     "email": "example3@example.com",
     "username": "elbuencarlos",
