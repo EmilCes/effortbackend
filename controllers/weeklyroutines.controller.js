@@ -1,59 +1,66 @@
-const { weeklyroutine, weeklydailyroutine, dailyroutine } = require('../models');
+const { where } = require('sequelize');
+const { weeklyroutine, weeklydailyroutine, dailyroutine, user } = require('../models');
+const crypto = require('crypto');
 
 let self = {}
 
-// GET: api/weeklyroutines/weeklyroutineId
+// GET: api/weeklyroutines/users/username
 self.get = async function (req, res) {
     try {
-        const { weeklyroutineId } = req.params;
-        let weeklyRoutine = await weeklyroutine.findByPk(weeklyroutineId);
+        const { username } = req.params;
 
-        if (!weeklyRoutine) {
-            return res.status(404).json({ message: 'Daily routine not found.' });
-        }
-
-        const weeklyDailyRoutines = await weeklydailyroutine.findAll({
-            where: { weeklyroutineId: weeklyroutineId },
-            include: [dailyroutine]
+        let foundUser = await user.findOne({
+            where: { username: username }
         });
 
-        const result = {
+        if (!foundUser) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        let weeklyRoutine = await weeklyroutine.findOne({
+            where: { userId: foundUser.userId },
+            include: [
+                {
+                    model: weeklydailyroutine,
+                    attributes: ['routineId', 'day'],
+                    include: [
+                        {
+                            model: dailyroutine,
+                            attributes: ['routineId', 'name']
+                        }
+                    ]
+                }
+            ]
+        });
+
+        if (!weeklyRoutine) {
+            return res.status(404).json({ message: 'Weekly routine not found.' });
+        }
+
+        const formattedResponse = {
             weeklyroutineId: weeklyRoutine.weeklyroutineId,
             name: weeklyRoutine.name,
-            userId: weeklyRoutine.userId,
-            routines: {
-                "Monday": "",
-                "Tuesday": "",
-                "Wednesday": "",
-                "Thursday": "",
-                "Friday": "",
-                "Saturday": "",
-                "Sunday": ""
-            }            
+            routines: weeklyRoutine.weeklydailyroutines.map(wdr => ({
+                day: wdr.day,
+                routineId: wdr.routineId,
+                routineName: wdr.dailyroutine ? wdr.dailyroutine.name : null
+            }))
         };
 
-        weeklyDailyRoutines.forEach(wdr => {
-            result.routines[wdr.day] = wdr.dailyroutine.routineId;
-        })
-
-        res.status(200).json(result);
+        res.status(200).json(formattedResponse);
     } catch (error) {
         console.error('Error retrieving weekly routine:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-}
+};
+
+
+
 
 // POST: api/weeklyroutines
 self.create = async function (req, res) {
     try {
         const { name, routines, userId } = req.body;
-
-        const validRoutines = Object.entries(routines).filter(([day, routineId]) => routineId);
-
-        const weeklyDailyRoutines = validRoutines.map(([day, routineId]) => ({
-            routineId,
-            day
-        }));
 
         const newWeeklyRoutine = await weeklyroutine.create({
             weeklyroutineId: crypto.randomUUID(),
@@ -61,15 +68,25 @@ self.create = async function (req, res) {
             userId,
         });
 
-        await weeklydailyroutine.bulkCreate(
-            weeklyDailyRoutines.map(routine => ({
-                weeklyroutineId: newWeeklyRoutine.weeklyroutineId,
-                dailyroutineId: routine.routineId,
-                day: routine.day,
-            }))
-        );
+        const weeklyDailyRoutines = [];
 
-        res.status(201).json({ message: 'Weekly routine created succesfully.'} );
+        for (const [day, routineId] of Object.entries(routines)) {
+            if (routineId) {
+                weeklyDailyRoutines.push({
+                    id: crypto.randomUUID(),
+                    weeklyroutineId: newWeeklyRoutine.weeklyroutineId,
+                    routineId: routineId,
+                    day: day,
+                });
+            }
+        }
+
+        await weeklydailyroutine.bulkCreate(weeklyDailyRoutines);
+
+        res.status(201).json({
+            weeklyroutineId: newWeeklyRoutine.weeklyroutineId,
+            name: newWeeklyRoutine.name,
+        });
     } catch (error) {
         console.error('Error creating weekly routine:', error);
         res.status(500).json({ message: 'Internal server error' });
@@ -91,42 +108,67 @@ self.update = async function (req, res) {
         weeklyRoutine.name = name;
         await weeklyRoutine.save();
 
-        const validRoutines = Object.entries(routines).filter(([day, dailyroutineId]) => dailyroutineId);
-        const newWeeklyDailyRoutines = validRoutines.map(([day, dailyroutineId]) => ({
-            dailyroutineId,
-            day
-        }));
-
         const existingWeeklyDailyRoutines = await weeklydailyroutine.findAll({
             where: { weeklyroutineId: weeklyroutineId }
         });
 
-        const existingPairs = new Set(existingWeeklyDailyRoutines.map(wdr => `${wdr.dailyroutineId}-${wdr.day}`));
-        const newPairs = new Set(newWeeklyDailyRoutines.map(wdr => `${wdr.dailyroutineId}-${wdr.day}`));
+        const existingPairs = new Set(existingWeeklyDailyRoutines.map(wdr => `${wdr.routineId}-${wdr.day}`));
+        const newPairs = new Set(Object.entries(routines).map(([day, routineId]) => `${routineId}-${day}`));
 
         for (const wdr of existingWeeklyDailyRoutines) {
-            const pair = `${wdr.dailyroutineId}-${wdr.day}`;
+            const pair = `${wdr.routineId}-${wdr.day}`;
             if (!newPairs.has(pair)) {
                 await wdr.destroy();
             }
         }
 
-        for (const { dailyroutineId, day } of newWeeklyDailyRoutines) {
-            const pair = `${dailyroutineId}-${day}`;
-            if (!existingPairs.has(pair)) {
-                await weeklydailyroutine.create({
+        const newWeeklyDailyRoutines = [];
+
+        for (const [day, routineId] of Object.entries(routines)) {
+            if (!existingPairs.has(`${routineId}-${day}`)) {
+                newWeeklyDailyRoutines.push({
+                    id: crypto.randomUUID(),
                     weeklyroutineId: weeklyroutineId,
-                    dailyroutineId: dailyroutineId,
-                    day: day
+                    routineId: routineId,
+                    day: day,
                 });
             }
         }
 
+        await weeklydailyroutine.bulkCreate(newWeeklyDailyRoutines);
+
         res.status(200).json({ message: 'Weekly routine updated successfully.' });
     } catch (error) {
         console.error('Error updating weekly routine:', error);
-        res.status(500).json({ message: 'Internal server error'})
+        res.status(500).json({ message: 'Internal server error' })
     }
 }
+
+// POST: api/weeklyroutines/weeklyroutineId/users/:username
+self.associateUser = async function (req, res) {
+    try {
+        const { weeklyroutineId, username } = req.params;
+
+        const weeklyRoutine = await weeklyroutine.findByPk(weeklyroutineId);
+
+        if (!weeklyRoutine) {
+            return res.status(404).json({ message: 'Weekly routine not found.' });
+        }
+
+        const user = await user.findOne({ where: { username: username } });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        await weeklyRoutine.setUser(user.userId);
+
+        res.status(200).json({ message: 'User associated successfully.' });
+    } catch (error) {
+        console.error('Error associating user with weekly routine:', error);
+        res.status(500).json({ message: 'Internal server error' })
+    }
+}
+
 
 module.exports = self;

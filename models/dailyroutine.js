@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class dailyroutine extends Model {
     static associate(models) {
-      dailyroutine.belongsToMany(models.weeklyroutine, { through: models.weeklydailyroutine, foreignKey: 'routineId'});
+      dailyroutine.hasMany(models.weeklydailyroutine, { foreignKey: 'routineId' });
       dailyroutine.belongsToMany(models.exercise, { as: 'exercises', through: models.dailyRoutineExercise, foreignKey: 'routineId', otherKey: 'exerciseId' })
       dailyroutine.belongsToMany(models.user, { through: models.userDailyRoutine, as: 'users', foreignKey: 'routineId' });
     }

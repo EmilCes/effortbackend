@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       user.belongsToMany(models.dailyroutine, { through: models.userDailyRoutine, as: 'dailyRoutines', foreignKey: 'userId' });
       user.hasOne(models.file, { foreignKey: 'userId', onDelete: 'CASCADE' });
       user.hasMany(models.exercise, { foreignKey: 'creatorId', as: 'exercises' });
+      user.hasOne(models.weeklyroutine, { foreignKey: 'userId', as: 'weeklyRoutine', onDelete: 'CASCADE' });
     }
   }
   user.init({

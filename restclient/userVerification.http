@@ -1,4 +1,4 @@
-PUT http://localhost:3000/api/user-verification/emilianolezama@outlook.com
+GET http://localhost:3000/api/user-verification/verified/emilianolezama@outlook.com
 
 ###
 

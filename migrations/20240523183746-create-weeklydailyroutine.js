@@ -18,9 +18,9 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      dailyroutineId: {
+      routineId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'dailyroutines',
           key: 'routineId'
