@@ -18,7 +18,7 @@ self.sendEmail = async function (req, res) {
         const token = crypto.randomBytes(20).toString('hex');
         userInstance.emailVerificationToken = token;
         await user.update({ emailVerificationToken: token }, { where: { email: email } })
-        const verificationLink = `http://${getLocalIP()}/effortbackend/api/user-verification/${token}`;
+        const verificationLink = `http://${getLocalIP('enp0s7')}/effortbackend/api/user-verification/${token}`;
 
         await sendEmail(
             email,
