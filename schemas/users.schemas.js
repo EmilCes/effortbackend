@@ -27,7 +27,7 @@ const createUserSchema = () => {
                 errorMessage: 'Password is required'
             },
             isLength: {
-                options: { min: 6 },
+                options: { min: 8 },
                 errorMessage: 'Password must be at least 6 characters long'
             }
         },
@@ -88,6 +88,17 @@ const updateUserSchema = () => {
                 errorMessage: 'Invalid email'
             }
         },
+        password: {
+            in: ['body'],
+            optional: true,
+            notEmpty: {
+                errorMessage: 'Password is required'
+            },
+            isLength: {
+                options: { min: 8 },
+                errorMessage: 'Password must be at least 6 characters long'
+            }
+        },
         username: {
             in: ['body'],
             optional: true,
@@ -128,6 +139,26 @@ const updateUserSchema = () => {
             optional: true,
             isFloat: {
                 errorMessage: 'Height must be a number'
+            }
+        },
+        dateOfBirth: {
+            in: ['body'],
+            optional: true,
+            notEmpty: {
+                errorMessage: 'Date of birth is required'
+            },
+            isDate: {
+                errorMessage: 'Invalid date format'
+            }
+        },
+        userType: {
+            in: ['body'],
+            optional: true,
+            notEmpty: {
+                errorMessage: 'User type is required'
+            },
+            isString: {
+                errorMessage: 'User type must be a string'
             }
         }
     };
