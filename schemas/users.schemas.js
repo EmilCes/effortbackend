@@ -103,10 +103,6 @@ const updateUserSchema = () => {
             optional: true,
             notEmpty: {
                 errorMessage: 'Password is required'
-            },
-            isLength: {
-                options: { min: 8 },
-                errorMessage: 'Password must be at least 6 characters long'
             }
         },
         username: {
