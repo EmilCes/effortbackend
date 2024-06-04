@@ -3,21 +3,21 @@ const dailyroutines = require('../controllers/dailyroutines.controller');
 const Authorize = require('../middlewares/auth.middleware');
 
 // GET: api/dailyroutines/routineId
-router.get('/', dailyroutines.getAll);
+router.get('/', Authorize('Admin,BodyBuilder,Trainer'), dailyroutines.getAll);
 
 // GET: api/dailyroutines/routineId
-router.get('/:routineId', dailyroutines.get);
+router.get('/:routineId', Authorize('Admin,BodyBuilder,Trainer'), dailyroutines.get);
 
 // POST: api/dailyroutines
-router.post('/', dailyroutines.create);
+router.post('/', Authorize('Admin,BodyBuilder,Trainer'), dailyroutines.create);
 
 // PUT: api/dailyroutines
-router.put('/:routineId', dailyroutines.update);
+router.put('/:routineId', Authorize('Admin,BodyBuilder,Trainer'), dailyroutines.update);
 
 // POST: api/dailyroutines/routineId/exercises
-router.post('/:routineId/exercises', dailyroutines.addExercises);
+router.post('/:routineId/exercises', Authorize('Admin,BodyBuilder,Trainer'), dailyroutines.addExercises);
 
 // PUT: api/dailyroutines/:routineId/exercises
-router.put('/:routineId/exercises', dailyroutines.updateExercises);
+router.put('/:routineId/exercises', Authorize('Admin,BodyBuilder,Trainer'), dailyroutines.updateExercises);
 
 module.exports = router;
