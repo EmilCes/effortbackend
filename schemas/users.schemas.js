@@ -88,6 +88,16 @@ const updateUserSchema = () => {
                 errorMessage: 'Invalid email'
             }
         },
+        bio: {
+            in: ['body'],
+            optional: true,
+            notEmpty: {
+                errorMessage: 'Bio is required'
+            },
+            isString: {
+                errorMessage: 'Bio must be a string'
+            }
+        },
         password: {
             in: ['body'],
             optional: true,
