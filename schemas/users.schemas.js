@@ -123,13 +123,6 @@ const updateUserSchema = () => {
                 errorMessage: 'Name must be a string'
             }
         },
-        middlename: {
-            in: ['body'],
-            optional: true,
-            isString: {
-                errorMessage: 'Middle name must be a string'
-            }
-        },
         lastname: {
             in: ['body'],
             optional: true,
