@@ -91,9 +91,6 @@ const updateUserSchema = () => {
         bio: {
             in: ['body'],
             optional: true,
-            notEmpty: {
-                errorMessage: 'Bio is required'
-            },
             isString: {
                 errorMessage: 'Bio must be a string'
             }
@@ -101,9 +98,6 @@ const updateUserSchema = () => {
         password: {
             in: ['body'],
             optional: true,
-            notEmpty: {
-                errorMessage: 'Password is required'
-            }
         },
         username: {
             in: ['body'],
@@ -143,19 +137,10 @@ const updateUserSchema = () => {
         dateOfBirth: {
             in: ['body'],
             optional: true,
-            notEmpty: {
-                errorMessage: 'Date of birth is required'
-            },
-            isDate: {
-                errorMessage: 'Invalid date format'
-            }
         },
         userType: {
             in: ['body'],
             optional: true,
-            notEmpty: {
-                errorMessage: 'User type is required'
-            },
             isString: {
                 errorMessage: 'User type must be a string'
             }
