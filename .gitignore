@@ -133,5 +133,8 @@ dist
 # SQL Scripts
 *.sql
 
-# Uploads
+# Ignorar todo el contenido de la carpeta uploads
 uploads/*
+
+# No ignorar el archivo .gitkeep
+!uploads/.gitkeep

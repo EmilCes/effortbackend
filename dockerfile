@@ -1,13 +1,10 @@
-FROM node:21
+FROM node:20-alpine
 
 # Clona el repositorio
 RUN git clone https://github.com/EmilCes/effortbackend.git /app
 
 # Establece el directorio de trabajo en el contenedor
 WORKDIR /app
-
-# Copia el archivo .env al contenedor (asegúrate de tener el archivo .env en la misma carpeta que el Dockerfile)
-COPY .env ./
 
 # Instala las dependencias
 RUN npm install
