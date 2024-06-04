@@ -4,7 +4,7 @@ GET http://localhost:3000/api/dailyroutines
 
 ###
 
-GET http://localhost:3001/api/dailyroutines/4
+GET http://localhost:3000/api/dailyroutines/4
 
 ###
 

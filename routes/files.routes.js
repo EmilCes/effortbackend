@@ -4,21 +4,21 @@ const Authorize = require('../middlewares/auth.middleware')
 const upload = require("../middlewares/upload.middleware")
 
 // GET: api/files
-router.get('/', files.getAll);
+router.get('/', Authorize('Admin,BodyBuilder,Trainer'), files.getAll);
 
 // GET: api/files/5
-router.get('/:fileId', files.get);
+router.get('/:fileId', Authorize('Admin,BodyBuilder,Trainer'), files.get);
 
 // GET: api/files/5/details
-router.get('/:fileId/details', files.getDetalils);
+router.get('/:fileId/details', Authorize('Admin,BodyBuilder,Trainer'), files.getDetalils);
 
 // POST: api/files
-router.post('/', upload.single("file"), files.create);
+router.post('/', Authorize('Admin,BodyBuilder,Trainer'), upload.single("file"), files.create);
 
 // PUT: api/files/5
-router.put('/:fileId', upload.single("file"), files.update);
+router.put('/:fileId', Authorize('Admin,BodyBuilder,Trainer'), upload.single("file"), files.update);
 
 // DELETE: api/files/5
-router.delete('/:fileId', files.delete);
+router.delete('/:fileId', Authorize('Admin,BodyBuilder,Trainer'), files.delete);
 
 module.exports = router

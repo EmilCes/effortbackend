@@ -1,14 +1,17 @@
 const os = require('os');
 
-const getLocalIP = () => {
+const getLocalIP = (interfaceName) => {
   const interfaces = os.networkInterfaces();
-  for (const name of Object.keys(interfaces)) {
-    for (const iface of interfaces[name]) {
+  const ifaceList = interfaces[interfaceName];
+  
+  if (ifaceList) {
+    for (const iface of ifaceList) {
       if (iface.family === 'IPv4' && !iface.internal) {
         return iface.address;
       }
     }
   }
+
   return null;
 };
 

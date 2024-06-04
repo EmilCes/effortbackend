@@ -9,7 +9,7 @@ router.get('/', Authorize('Admin,BodyBuilder,Trainer'), muscles.getAll);
 router.get('/:muscleId', Authorize('Admin,BodyBuilder,Trainer'),  muscles.get);
 
 // POST: api/muscles
-router.post('/', muscles.create);
+router.post('/', Authorize('Admin,BodyBuilder,Trainer'), muscles.create);
 
 // PUT: api/muscles/muscleId
 router.put('/:muscleId', Authorize('Admin,BodyBuilder,Trainer'), muscles.update);

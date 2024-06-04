@@ -3,15 +3,15 @@ const weeklyroutines = require('../controllers/weeklyroutines.controller');
 const Authorize = require('../middlewares/auth.middleware');
 
 // GET: api/weeklyroutines/users/username
-router.get('/users/:username', weeklyroutines.get);
+router.get('/users/:username', Authorize('Admin,BodyBuilder,Trainer'), weeklyroutines.get);
 
 // POST: api/weeklyroutines
-router.post('/', weeklyroutines.create);
+router.post('/', Authorize('Admin,BodyBuilder,Trainer'), weeklyroutines.create);
 
 // PUT: api/weeklyroutines/weeklyroutineId
-router.put('/:weeklyroutineId', weeklyroutines.update);
+router.put('/:weeklyroutineId', Authorize('Admin,BodyBuilder,Trainer'), weeklyroutines.update);
 
 // POST: api/weeklyroutines/weeklyroutineId/users/:username
-router.post('/:weeklyroutineId/users/:username', weeklyroutines.update);
+router.post('/:weeklyroutineId/users/:username', Authorize('Admin,BodyBuilder,Trainer'), weeklyroutines.update);
 
 module.exports = router;

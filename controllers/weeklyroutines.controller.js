@@ -43,7 +43,7 @@ self.get = async function (req, res) {
             routines: weeklyRoutine.weeklydailyroutines.map(wdr => ({
                 day: wdr.day,
                 routineId: wdr.routineId,
-                routineName: wdr.dailyroutine ? wdr.dailyroutine.name : null
+                name: wdr.dailyroutine ? wdr.dailyroutine.name : null
             }))
         };
 

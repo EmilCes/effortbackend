@@ -18,15 +18,15 @@ router.put('/:username', Authorize('Admin,BodyBuilder,Trainer'), users.update);
 router.delete('/:username', Authorize('Admin,BodyBuilder,Trainer'), users.delete);
 
 // GET: api/users/:username/dailyroutines
-router.get('/:username/dailyroutines', users.getDailyRoutines);
+router.get('/:username/dailyroutines', Authorize('Admin,BodyBuilder,Trainer'), users.getDailyRoutines);
 
 // POST: api/users/:username/dailyroutines/:routineId
-router.post('/:username/dailyroutines/:routineId', users.addDailyRoutine);
+router.post('/:username/dailyroutines/:routineId', Authorize('Admin,BodyBuilder,Trainer'), users.addDailyRoutine);
 
 // POST: api/users/:userId/files/:fileId
-router.post('/:username/files/:fileId', users.addFile);
+router.post('/:username/files/:fileId', Authorize('Admin,BodyBuilder,Trainer'), users.addFile);
 
 // PUT: api/users/:userId/files/:fileId
-router.put('/:userId/files/:fileId', users.updateFile);
+router.put('/:userId/files/:fileId', Authorize('Admin,BodyBuilder,Trainer'), users.updateFile);
 
 module.exports = router;
