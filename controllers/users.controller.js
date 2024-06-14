@@ -145,20 +145,7 @@ self.update = async function (req, res) {
             return res.status(204).send();
         }
     } catch (error) {
-        console.log("Error:", error); // Log the error for debugging
-
-        if (error.name === 'SequelizeValidationError') {
-            return res.status(400).send({
-                message: "Validation error",
-                details: error.errors.map(e => ({
-                    message: e.message,
-                    path: e.path,
-                    value: e.value
-                }))
-            });
-        } else {
-            return res.status(500).send({ message: error.message });
-        }
+        return res.status(500).send({ message: error.message });
     }
 }
 
@@ -222,9 +209,6 @@ self.getDailyRoutines = async function (req, res) {
         return res.status(500).json({ error: "Error al obtener rutinas: " });
     }
 }
-
-
-
 
 // POST: api/users/:username/dailyroutines/:routineId
 self.addDailyRoutine = async function (req, res) {

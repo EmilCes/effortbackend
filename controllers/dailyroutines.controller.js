@@ -1,4 +1,4 @@
-const { where } = require('sequelize');
+const { where,  Op } = require('sequelize');
 const { dailyroutine, exercise, user, muscle} = require('../models')
 let self = {}
 
@@ -25,7 +25,8 @@ self.getAll = async function (req, res) {
 
         return res.status(200).json(response);
     } catch (error) {
-        return res.status(500).json(data);
+        console.log(error);
+        return res.status(500).json(error);
     }
 }
 
