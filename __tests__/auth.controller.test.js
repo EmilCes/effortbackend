@@ -2,9 +2,8 @@ const app = require('../index');
 const request = require('supertest');
 const responseCodes = require('../utils/responseCodes');
 const crypto = require('crypto');
-const { GenerateToken } = require('../services/jwttoken.service');
 const bcrypt = require('bcrypt');
-const { user, userType, Sequelize } = require('../models');
+const { user, Sequelize } = require('../models');
 
 let testUserCounter = 1;
 
@@ -17,7 +16,7 @@ async function insertTestUser() {
           name: username,
           lastname: username,
           dateOfBirth: '1990-04-20',
-          userTypeId: '6afe960a-8353-4050-b1d0-bfb4bdd68d0c',
+          userTypeId: '8ff1d8c8-f0de-486e-a64a-b97c07bed950',
           email: `${username}@example.com`,
           password: await bcrypt.hash('testpassword', 10), // Hash de la contraseña
       });

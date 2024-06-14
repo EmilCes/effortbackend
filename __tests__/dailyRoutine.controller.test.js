@@ -1,11 +1,10 @@
 const app = require('../index');
 const request = require('supertest');
 const responseCodes = require('../utils/responseCodes');
-const { dailyroutine, exercise, muscle, user } = require('../models');
+const { dailyroutine, exercise, user } = require('../models');
 const crypto = require('crypto');
 const { GenerateToken } = require('../services/jwttoken.service');
 const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
 
 let testRoutineCounter = 1;
 let testExerciseCounter = 1;
@@ -26,7 +25,7 @@ async function insertTestUser() {
           name: username,
           lastname: username,
           dateOfBirth: '1990-04-20',
-          userTypeId: '6afe960a-8353-4050-b1d0-bfb4bdd68d0c',
+          userTypeId: '8ff1d8c8-f0de-486e-a64a-b97c07bed950',
           email: `${username}@example.com`,
           password: 'testpassword',
       });

@@ -17,7 +17,7 @@ async function insertTestUser() {
           name: username,
           lastname: username,
           dateOfBirth: '1990-04-20',
-          userTypeId: '6afe960a-8353-4050-b1d0-bfb4bdd68d0c',
+          userTypeId: '8ff1d8c8-f0de-486e-a64a-b97c07bed950',
           email: `${username}@example.com`,
           password: 'testpassword',
       });
