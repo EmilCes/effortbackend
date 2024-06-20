@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       user.hasOne(models.file, { foreignKey: 'userId', onDelete: 'CASCADE' });
       user.hasMany(models.exercise, { foreignKey: 'creatorId', as: 'exercises' });
       user.hasOne(models.weeklyroutine, { foreignKey: 'userId', as: 'weeklyRoutine', onDelete: 'CASCADE' });
+      user.hasMany(models.statistic, { foreignKey: 'userId', as: 'statistics'});
     }
   }
   user.init({
