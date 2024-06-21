@@ -28,6 +28,7 @@ app.use('/api/weeklyroutines', require('./routes/weeklyroutines.routes'));
 app.use('/api/files', require('./routes/files.routes'));
 app.use('/api/invalidExercises', require('./routes/invalidExercises.routes'));
 app.use('/api/statistics', require('./routes/statistics.routes'));
+app.use('/api/follows', require('./routes/follows.routes'));
 app.get("*", (req, res) => { res.status(404).send() });
 
 // Middleware

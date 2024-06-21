@@ -8,9 +8,9 @@ POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-    "email": "examplew2@example.com",
+    "email": "examplew99@example.com",
     "password": "passW3Se?a#111",
-    "username": "exampleUser2",
+    "username": "exampleUser99",
     "name": "John",
     "lastname": "Doe",
     "dateOfBirth": "1990-01-01",
@@ -23,6 +23,6 @@ POST http://localhost:3000/api/auth
 Content-Type: application/json
 
 {
-    "email": "examplew2@example.com",
+    "email": "examplew99@example.com",
     "password": "passW3Se?a#111"
 }

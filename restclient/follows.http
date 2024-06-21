@@ -1,0 +1,33 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZXhhbXBsZXc5OUBleGFtcGxlLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2dpdmVubmFtZSI6ImV4YW1wbGVVc2VyOTkiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJUcmFpbmVyIiwiaXNzIjoiRWZmb3J0IiwiYXVkIjoiRWZmb3J0VXNlcnMiLCJpYXQiOjE3MTg5Mjk4NzMsImV4cCI6MTcxODkzMTA3M30.s9ionC6TxeLP_Bl3Tro__aohfH-pSD_vL7rOUuo6Cqg
+
+GET http://localhost:3000/api/follows/Cesarele23/following
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+###
+
+GET http://localhost:3000/api/follows/Cesarele23/followers
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+###
+
+POST http://localhost:3000/api/follows
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "followerUsername": "Cesarele23",
+  "followedUsername": "exampleUser2"
+}
+
+###
+
+DELETE http://localhost:3000/api/follows
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "followerUsername": "Cesarele23",
+  "followedUsername": "exampleUser2"
+}

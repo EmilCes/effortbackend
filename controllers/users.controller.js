@@ -1,4 +1,4 @@
-const { user, file, dailyroutine, userDailyRoutine, userType, Sequelize } = require('../models');
+const { user, file, dailyroutine, userDailyRoutine, userType, follow, Sequelize } = require('../models');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const { Op, where } = require('sequelize');
@@ -23,7 +23,7 @@ self.getAll = async function (req, res) {
         include: {
             model: userType,
             as: 'userType',
-            attributes: [] // No se incluyen atributos adicionales del modelo userType
+            attributes: [] 
         }
     });
 
@@ -59,10 +59,25 @@ self.get = async function (req, res) {
         ]
     });
 
-    if (data)
-        return res.status(200).json(data);
+    if (!data) {
+        return res.status(404).send();
+    }
 
-    return res.status(404).send();
+    // Contar el número de seguidores
+    const followersCount = await follow.count({
+        where: { userFollowedId: data.userId }
+    });
+
+    // Contar el número de seguidos
+    const followingCount = await follow.count({
+        where: { userFollowerId: data.userId }
+    });
+
+    // Agregar los conteos a los datos del usuario
+    data.followersCount = followersCount;
+    data.followingCount = followingCount;
+
+    return res.status(200).json(data);
 }
 
 // POST: api/users
@@ -95,7 +110,7 @@ self.create = async function (req, res) {
             weight: data.weight,
             height: data.height,
             dateOfBirth: data.dateOfBirth,
-            userType: userTypeInstance.description // Cambia userType a userTypeInstance
+            userType: userTypeInstance.description
         });
     } catch (error) {
         console.log(error);
